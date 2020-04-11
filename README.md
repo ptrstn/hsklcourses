@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/ptrstn/hsklcourses.svg?branch=master)](https://travis-ci.com/ptrstn/hsklcourses)
+[![codecov](https://codecov.io/gh/ptrstn/hsklcourses/branch/master/graph/badge.svg)](https://codecov.io/gh/ptrstn/hsklcourses)
 
 # hsklcourses
 
