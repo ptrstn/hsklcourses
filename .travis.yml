@@ -10,7 +10,8 @@ install:
   - pip install -e .
 
 script:
-  - pytest
+  - pytest --cov .
+  - python -m hsklcourses.__main__
 
 after_success:
   - codecov
