@@ -1,11 +1,13 @@
 import pathlib
 import shutil
 
+import pytest
+
 from hsklcourses.courses import (
     get_courses,
     as_sorted_dataframe,
     create_folder_structure,
-)
+    pretty_print_coures)
 from hsklcourses.shortcuts import (
     get_angewandte_informatik_courses,
     get_master_informatik_courses,
@@ -13,10 +15,18 @@ from hsklcourses.shortcuts import (
 )
 
 
+def test_get_courses_exceptions():
+    with pytest.raises(ValueError):
+        get_courses("Bachleor Informatik")
+    with pytest.raises(ValueError):
+        get_courses("Bachelor Elektrotechnik", "Biologie")
+
+
 def test_angewandte_informatik():
     courses = get_courses("Bachelor Angewandte Informatik")
     assert courses[0]["modul"] == "Grundlagen der Informatik (GDI)"
     assert courses[0]["semester"] == "1"
+    pretty_print_coures(courses)
 
 
 def test_nachrichtentechnik():
@@ -61,7 +71,7 @@ def test_create_folder_structure():
     create_folder_structure(
         ai, pathlib.Path("test_data", "Bachelor Angewandte Informatik")
     )
-    create_folder_structure(i, pathlib.Path("test_data", "Master Informatik"))
+    create_folder_structure(i, pathlib.Path("test_data", "Master Informatik"), include_semester=True)
     create_folder_structure(nt, pathlib.Path("test_data", "Bachelor Elektrotechnik"))
 
     assert pathlib.Path("test_data", "Bachelor Angewandte Informatik").exists()
@@ -89,6 +99,14 @@ def test_create_folder_structure():
         "Code",
     ).exists()
 
+    assert pathlib.Path(
+        "test_data",
+        "Master Informatik",
+        "1 - Automaten Berechenbarkeit und Komplexität (ABK)",
+        "Übungen",
+    ).exists()
+
     shutil.rmtree("test_data/")
 
     assert not pathlib.Path("test_data").exists()
+
