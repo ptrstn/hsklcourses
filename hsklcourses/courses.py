@@ -85,11 +85,16 @@ def get_valid_filename(text):
     return re.sub(" +", " ", re.sub("[^-a-zA-Z0-9_.+()äöüß ]+", "", text))
 
 
-def create_folder_structure(courses, base_path=None):
+def create_folder_structure(courses, base_path=None, include_semester=False):
     for course in courses:
-        semester = course.get("semester")[0]
         course_name = course.get("modul")
-        folder_name = get_valid_filename(f"{semester} - {course_name}")
+
+        if include_semester:
+            semester = course.get("semester")[0]
+            folder_name = get_valid_filename(f"{semester} - {course_name}")
+        else:
+            folder_name = get_valid_filename(f"{course_name}")
+
         path = pathlib.Path(base_path if base_path else pathlib.Path(), folder_name)
 
         print(f"Creating {path}...")

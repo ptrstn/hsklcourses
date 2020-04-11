@@ -79,7 +79,7 @@ def test_create_folder_structure():
         "test_data",
         "Bachelor Angewandte Informatik",
         "Projektmanagement (PM)",
-        "Uebungen",
+        "Übungen",
     ).exists()
 
     assert pathlib.Path(
