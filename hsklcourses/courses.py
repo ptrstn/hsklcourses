@@ -82,7 +82,7 @@ def as_list(dataframe):
 
 
 def get_valid_filename(text):
-    return re.sub("[^\w_.)( -]", "", text)
+    return re.sub(" +", " ", re.sub("[^-a-zA-Z0-9_.+() ]+", "", text))
 
 
 def create_folder_structure(courses, base_path=None):
