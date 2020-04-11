@@ -1,5 +1,6 @@
 import json
 import pathlib
+import re
 
 import pandas
 import requests
@@ -80,10 +81,15 @@ def as_list(dataframe):
     return json.loads(dataframe.to_json(orient="records"))
 
 
+def get_valid_filename(text):
+    return re.sub("[^\w_.)( -]", "", text)
+
+
 def create_folder_structure(courses, base_path=None):
     for course in courses:
         course_name = course.get("modul")
-        path = pathlib.Path(base_path if base_path else pathlib.Path(), course_name)
+        folder_name = get_valid_filename(course_name)
+        path = pathlib.Path(base_path if base_path else pathlib.Path(), folder_name)
 
         print(f"Creating {path}...")
         path.mkdir(parents=True, exist_ok=True)

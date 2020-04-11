@@ -74,12 +74,14 @@ def test_create_folder_structure():
         "Grundlagen der Informatik (GDI)",
         "Skript",
     ).exists()
+
     assert pathlib.Path(
         "test_data",
         "Bachelor Angewandte Informatik",
         "Projektmanagement (PM)",
         "Uebungen",
     ).exists()
+
     assert pathlib.Path(
         "test_data",
         "Bachelor Angewandte Informatik",
