@@ -82,13 +82,14 @@ def as_list(dataframe):
 
 
 def get_valid_filename(text):
-    return re.sub(" +", " ", re.sub("[^-a-zA-Z0-9_.+() ]+", "", text))
+    return re.sub(" +", " ", re.sub("[^-a-zA-Z0-9_.+()äöüß ]+", "", text))
 
 
 def create_folder_structure(courses, base_path=None):
     for course in courses:
+        semester = course.get("semester")[0]
         course_name = course.get("modul")
-        folder_name = get_valid_filename(course_name)
+        folder_name = get_valid_filename(f"{semester} - {course_name}")
         path = pathlib.Path(base_path if base_path else pathlib.Path(), folder_name)
 
         print(f"Creating {path}...")
@@ -98,7 +99,16 @@ def create_folder_structure(courses, base_path=None):
 
 def create_basic_subfolders(path, subfolders=None):
     if not subfolders:
-        subfolders = ["Skript", "Uebungen", "Literatur", "Notizen", "Projekt", "Code"]
+        subfolders = [
+            "Skript",
+            "Übungen",
+            "Literatur",
+            "Notizen",
+            "Klausuren",
+            "Projekt",
+            "Code",
+            "Lösungen",
+        ]
 
     for subfolder in subfolders:
         sub_path = pathlib.Path(path, subfolder)
